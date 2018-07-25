@@ -24,6 +24,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='name']" position="after">
                     <field name="email" />
+                    <field name="allow_relay" />
                 </xpath>
             </field>
         </record>
