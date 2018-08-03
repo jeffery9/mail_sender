@@ -18,8 +18,14 @@ class IrMailServer(models.Model):
         else:
             mail_server = self.sudo().search([], order='sequence', limit=1)
 
-        message.replace_header('From', mail_server.email)
-        message.replace_header('Return-Path', mail_server.email)
+        if message.get('From'):
+            message.replace_header('From', mail_server.email)
+
+        if message.get('Return-Path'):
+            message.replace_header('Return-Path', mail_server.email)
+        else:
+            message.add_header('Return-Path', mail_server.email)
+            
         if mail_server.allow_relay and origin_mail_form != mail_server.email:
             message['Sender'] = origin_mail_form
 
